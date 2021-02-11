@@ -88,7 +88,7 @@ public class MouseLook : MonoBehaviour
     private void UpdatePos() {
         int current = nextBody - 1;
         Vector3 bodyPos = bodies[current].transform.position;
-        this.transform.position = new Vector3(bodyPos.x, bodyPos.y + 100, bodyPos.z);
+        this.transform.position = new Vector3(bodyPos.x, bodyPos.y + 1, bodyPos.z);
     }
 
     public void SetCursorLock(bool value)
