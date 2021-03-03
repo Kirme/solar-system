@@ -64,19 +64,16 @@ public class Body : MonoBehaviour {
         acceleration = force / mass; //Acceleration in m/s^2
         acceleration /= scaleManager.GetDistance(); //Acceleration in AU*s^-2
         
-
         velocity += acceleration * Time.fixedDeltaTime * scaleManager.GetTime();
     }
 
     private void Attract(Body otherBody) {
         Vector3 dir = (otherBody.transform.position - this.transform.position) * scaleManager.GetDistance();
-        Debug.Log(dir.normalized);
         float distSqrd = dir.sqrMagnitude; //Distance in meters
 
         float forceMagnitude = scaleManager.GetG() * mass * otherBody.GetMass() / distSqrd; //G * m1 * m2 / d^2
         Vector3 gravForce = dir.normalized * forceMagnitude; //Force in Newtons
         CalcVelocity(gravForce);
-        
         Move();
     }
 }
