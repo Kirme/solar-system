@@ -26,8 +26,9 @@ public class Orbit : MonoBehaviour {
         lastX = this.transform.position.x;
         float axisLength = (orbitAround.transform.position - this.transform.position).magnitude * scaleManager.GetDistance(); //Axis length in m
 
-        localVelocity = Mathf.Sqrt(scaleManager.GetG() * (orbitAround.GetComponent<Body>().GetMass() + myBody.GetMass()) / axisLength) * velocityMultiplier; //Velocity in m/s
-        Debug.Log(localVelocity);
+        //Equation: sqrt(G*M/r)
+        localVelocity = Mathf.Sqrt(scaleManager.GetG() * orbitAround.GetComponent<Body>().GetMass() / axisLength) * velocityMultiplier; //Velocity in m/s
+        //Debug.Log(localVelocity);
         localVelocity /= scaleManager.GetDistance(); //Velocity in AU/s
         velocity = localVelocity * transform.forward;
     }
@@ -39,7 +40,7 @@ public class Orbit : MonoBehaviour {
         if (change > 0 && !lastChangePositive) {
             Debug.Log("Aphelion: " + thisX);
         } else if (change <= 0 && lastChangePositive) {
-            Debug.Log("Perhelion: " + thisX);
+            Debug.Log("Perihelion: " + thisX);
         }
 
         lastChangePositive = change > 0;
