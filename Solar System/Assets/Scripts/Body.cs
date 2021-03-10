@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Body : MonoBehaviour {
-    const float G = 6.67384e-11f; //Gravitational constant
-    const float MASS_SCALE = 5.9722e24f; //1 unit of mass is one earth mass in kg
-    const float DIST_SCALE = 1e8f; //1 unit of length is 10 000 000 m
-
     [Tooltip("Mass in terms of earth's mass")]
     [SerializeField] private float earths = 1f;
 
@@ -14,9 +10,11 @@ public class Body : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
     private bool inOrbit = false;
     private float mass;
+    private ScaleManager scaleManager;
 
     private void Awake() {
-        mass = earths * MASS_SCALE;
+        scaleManager = FindObjectOfType<ScaleManager>();
+        mass = earths * scaleManager.GetMass(); //Set mass in kg
     }
 
     private void Start() {
@@ -57,26 +55,25 @@ public class Body : MonoBehaviour {
         if (inOrbit) {
             Vector3 orbitalSpeed = GetComponent<Orbit>().GetOrbitingAround().GetComponent<Body>().GetVelocity();
             totalVelocity += orbitalSpeed;
-            //Debug.Log("GRAV VEL: " + velocity);
-            //Debug.Log("ORBIT VEL: " + orbitalSpeed);
         }
 
-        this.transform.position += totalVelocity * Time.fixedDeltaTime;
+        this.transform.position += totalVelocity * scaleManager.GetTime() * Time.fixedDeltaTime;
     }
 
     private void CalcVelocity(Vector3 force) {
-        acceleration = force / mass;
-        velocity += acceleration * Time.fixedDeltaTime;
+        acceleration = force / mass; //Acceleration in m/s^2
+        acceleration /= scaleManager.GetDistance(); //Acceleration in AU*s^-2
+        
+        velocity += acceleration * Time.fixedDeltaTime * scaleManager.GetTime();
     }
 
     private void Attract(Body otherBody) {
-        Vector3 dir = (otherBody.transform.position - this.transform.position) * DIST_SCALE;
-        float distSqrd = dir.sqrMagnitude;
+        Vector3 dir = (otherBody.transform.position - this.transform.position) * scaleManager.GetDistance();
+        float distSqrd = dir.sqrMagnitude; //Distance in meters
 
-        float forceMagnitude = mass * otherBody.GetMass() / distSqrd; //G * m1 * m2 / d^2
-        Vector3 gravForce = dir.normalized * forceMagnitude / DIST_SCALE;
+        float forceMagnitude = scaleManager.GetG() * mass * otherBody.GetMass() / distSqrd; //G * m1 * m2 / d^2
+        Vector3 gravForce = dir.normalized * forceMagnitude; //Force in Newtons
         CalcVelocity(gravForce);
-
         Move();
     }
 }

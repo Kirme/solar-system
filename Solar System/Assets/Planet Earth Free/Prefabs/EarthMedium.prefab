@@ -89,8 +89,6 @@ GameObject:
   m_Component:
   - component: {fileID: 405376}
   - component: {fileID: 11435818}
-  - component: {fileID: 573854879}
-  - component: {fileID: 573854877}
   m_Layer: 0
   m_Name: EarthMedium
   m_TagString: Untagged
@@ -107,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 135778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 466696}
   - {fileID: 495052}
@@ -132,33 +130,6 @@ MonoBehaviour:
   clockwise: 1
   direction: 1
   directionChangeSpeed: 2
---- !u!114 &573854879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 135778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8380999f036634dc597f0a168efea2ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orbitAround: {fileID: 0}
-  velocityMultiplier: 1
---- !u!114 &573854877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 135778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2371f7f8bfec34597a8f8a11d96d4a74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  earths: 1
 --- !u!1 &171858
 GameObject:
   m_ObjectHideFlags: 0
