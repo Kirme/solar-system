@@ -73,6 +73,7 @@ public class Body : MonoBehaviour {
 
         float forceMagnitude = scaleManager.GetG() * mass * otherBody.GetMass() / distSqrd; //G * m1 * m2 / d^2
         Vector3 gravForce = dir.normalized * forceMagnitude; //Force in Newtons
+        
         CalcVelocity(gravForce);
         Move();
     }

@@ -15,7 +15,6 @@ public class MouseLook : MonoBehaviour
     private Quaternion m_CameraTargetRot;
     private bool m_cursorIsLocked = true;
     private new Transform camera;
-    private bool fast = false;
     private Vector3 topDown = Vector3.zero;
     private GameObject[] bodies;
     private int nextBody = 0;
@@ -33,42 +32,42 @@ public class MouseLook : MonoBehaviour
 
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.S))
-            ChangeTimeScale();
-
+        ChangeTimeScale();
+        
         if (Input.GetKeyDown(KeyCode.Tab)) {
             ChangeBody();
         }
-
+            
         if (startMoving) {
             UpdatePos();
         }
 
-        float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
-        float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
+        if (m_cursorIsLocked) {
+            float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
+            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
-        m_CameraTargetRot *= Quaternion.Euler (-xRot, yRot, 0f);
+            m_CameraTargetRot *= Quaternion.Euler (-xRot, yRot, 0f);
 
-        if(smooth)
-        {
+            if(smooth) {
             camera.localRotation = Quaternion.Slerp (camera.localRotation, m_CameraTargetRot,
                 smoothTime * Time.deltaTime);
-        }
-        else
-        {
-            camera.localRotation = m_CameraTargetRot;
+            }
+            else {
+                camera.localRotation = m_CameraTargetRot;
+            }
         }
 
+        
         UpdateCursorLock();
     }
 
     private void ChangeTimeScale() {
-        if (fast) {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
             Time.timeScale = 1f;
-        } else {
+        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
             Time.timeScale = 10f;
-        }
-        fast = !fast;
+        } else if (Input.GetKeyDown(KeyCode.Alpha3))
+            Time.timeScale = 50f;
     }
 
     private void ChangeBody() {
@@ -103,7 +102,7 @@ public class MouseLook : MonoBehaviour
 
     public void UpdateCursorLock()
     {
-        //if the user set "lockCursor" we check & properly lock the cursos
+        //if the user set "lockCursor" we check & properly lock the cursor
         if (lockCursor)
             InternalLockUpdate();
     }

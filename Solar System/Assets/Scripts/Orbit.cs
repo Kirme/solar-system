@@ -38,9 +38,9 @@ public class Orbit : MonoBehaviour {
         float thisX = this.transform.position.x;
         float change = thisX - lastX;
         if (change > 0 && !lastChangePositive) {
-            Debug.Log("Aphelion: " + thisX);
+            //Debug.Log("Aphelion: " + thisX);
         } else if (change <= 0 && lastChangePositive) {
-            Debug.Log("Perihelion: " + thisX);
+            //Debug.Log("Perihelion: " + thisX);
         }
 
         lastChangePositive = change > 0;
